@@ -1,0 +1,72 @@
+.login-wrapper {
+    font-family: sans-serif;
+    background-color: #fff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+
+.login-container {
+    max-width: 400px;
+    width: 100%;
+    padding: 20px;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    background-color: white;
+}
+
+.login-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.login-container label {
+    display: block;
+    margin: 10px 0 6px;
+    font-size: 14px;
+}
+
+.login-container input[type="email"],
+.login-container input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.login-container button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    background-color: black;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.login-container .join {
+    margin-top: 10px;
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+}
+
+.login-container .sns {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.login-container .sns p {
+    margin-bottom: 10px;
+}
+
+.login-container .sns img {
+    width: 36px;
+    margin: 0 10px;
+    vertical-align: middle;
+}

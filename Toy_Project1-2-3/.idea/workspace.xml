@@ -1,0 +1,530 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="toyproject:war exploded" />
+    </artifacts-to-build>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="2c2bbd94-29a2-4bc8-89e7-9e7aa872d00e" name="Changes" comment="refactor : 회원가입 CSS&#10;&#10;-회원가입 페이지 센터로 이동">
+      <change beforePath="$PROJECT_DIR$/src/main/java/toyproject/config/DataSourceConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/toyproject/config/DataSourceConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/jdbc.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/jdbc.properties" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="JavaScript File" />
+        <option value="Class" />
+        <option value="spring-beans.schema" />
+        <option value="Jsp File" />
+        <option value="CSS File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;dev365code&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/callmehoon/KDT_BE12_Toy_Project2-3&quot;,
+    &quot;accountId&quot;: &quot;e6c9a85c-4882-4f75-9270-90a51016adaa&quot;
+  }
+}</component>
+  <component name="LogFilters">
+    <option name="FILTER_ERRORS" value="false" />
+    <option name="FILTER_WARNINGS" value="false" />
+    <option name="FILTER_INFO" value="true" />
+    <option name="FILTER_DEBUG" value="true" />
+    <option name="CUSTOM_FILTER" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="2yaEEFxAzyL7cZuRB6ClQ0An6tP" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Tomcat Server.Tomcat 9.0.105.executor&quot;: &quot;Run&quot;,
+    &quot;Tomcat Server.index.jsp.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;terminal&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql_aurora&quot;
+    ]
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/webapp/image" />
+      <recent name="$PROJECT_DIR$/src/main/webapp" />
+      <recent name="$PROJECT_DIR$/src/main/resources/image" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Tomcat 9.0.105" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.105" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
+      <option name="UPDATING_POLICY" value="restart-server" />
+      <deployment>
+        <artifact name="toyproject:war exploded">
+          <settings>
+            <option name="CONTEXT_PATH" value="/" />
+          </settings>
+        </artifact>
+      </deployment>
+      <server-settings>
+        <option name="BASE_DIRECTORY_NAME" value="2f97bc12-8332-416f-a1cf-97afa6df707a" />
+      </server-settings>
+      <predefined_log_file enabled="true" id="Tomcat" />
+      <predefined_log_file enabled="true" id="Tomcat Catalina" />
+      <predefined_log_file id="Tomcat Manager" />
+      <predefined_log_file id="Tomcat Host Manager" />
+      <predefined_log_file id="Tomcat Localhost Access" />
+      <RunnerSettings RunnerId="AppServerDebuggerRunner">
+        <option name="DEBUG_PORT" value="55110" />
+      </RunnerSettings>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="AppServerDebuggerRunner">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Profile">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <method v="2">
+        <option name="Make" enabled="true" />
+        <option name="BuildArtifacts" enabled="true">
+          <artifact name="toyproject:war exploded" />
+        </option>
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.25410.129" />
+        <option value="bundled-js-predefined-d6986cc7102b-6a121458b545-JavaScript-IU-251.25410.129" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2c2bbd94-29a2-4bc8-89e7-9e7aa872d00e" name="Changes" comment="" />
+      <created>1750064170687</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1750064170687</updated>
+      <workItem from="1750064171884" duration="26101000" />
+      <workItem from="1750314657328" duration="98690000" />
+      <workItem from="1750826930190" duration="25586000" />
+      <workItem from="1750902939061" duration="42060000" />
+      <workItem from="1751262040299" duration="5945000" />
+    </task>
+    <task id="LOCAL-00001" summary="feat(login): 메인(로그인)/메인(로그아웃)/로그인/회원가입 페이지 퍼블리싱">
+      <option name="closed" value="true" />
+      <created>1750151034132</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1750151034132</updated>
+    </task>
+    <task id="LOCAL-00002" summary="refactor(login) : 메인(로그인)/메인(로그아웃)/로그인/회원가입 HTML과 CSS 분리 + 공통항목 수정 &lt;title&gt;축구는 종교다&lt;/title&gt;">
+      <option name="closed" value="true" />
+      <created>1750153706504</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1750153706504</updated>
+    </task>
+    <task id="LOCAL-00003" summary="feat(login): 회원가입 기능 구현&#10;&#10;-회원가입 시 화면단 검증로직js&#10;-회원가입 시 자잘한 편의기능js&#10;-DB매핑을 위한 Mapper set">
+      <option name="closed" value="true" />
+      <created>1750604063132</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1750604063132</updated>
+    </task>
+    <task id="LOCAL-00004" summary="fix(order): 회원가입 레지스터컨트롤.java 수정&#10;&#10;DB연결을 위한 추가 PostMapping 생성으로 인한 오류&#10;→PostMapping 중복 2개의 PostMapping 통합">
+      <option name="closed" value="true" />
+      <created>1750605394751</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1750605394751</updated>
+    </task>
+    <task id="LOCAL-00005" summary="fix(order): UserService.java 수정&#10;&#10;회원가입시 패스워드 암호화 미구현">
+      <option name="closed" value="true" />
+      <created>1750605645723</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1750605645723</updated>
+    </task>
+    <task id="LOCAL-00006" summary="feat(login): 로그인 기능 구현&#10;&#10;로그인 기능구현 및 회원가입 페이지 연결&#10;-&gt;로그인 화면단 검증로직 구현 user_login.js">
+      <option name="closed" value="true" />
+      <created>1750647789420</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1750647789420</updated>
+    </task>
+    <task id="LOCAL-00007" summary="refactor(user): DB연결 작업 진행중&#10;&#10;- 아래 각 파일에 DB연동을 위한 코드추가&#10;- LoginRequestDto, LoginUserDto, UserMapp.java, UserMapper.xml, UserService.java">
+      <option name="closed" value="true" />
+      <created>1750662050112</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1750662050112</updated>
+    </task>
+    <task id="LOCAL-00008" summary="refactor : 충돌해결&#10;&#10;- 충돌해결">
+      <option name="closed" value="true" />
+      <created>1750663211261</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1750663211261</updated>
+    </task>
+    <task id="LOCAL-00009" summary="refactor : DB연결 수정&#10;&#10;- 경로 충돌 재조정&#10;toyproject.controller.dto.LoginUserDto&#10;- 컬럼명 DB 컬럼과 동기화">
+      <option name="closed" value="true" />
+      <created>1750669681889</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1750669681889</updated>
+    </task>
+    <task id="LOCAL-00010" summary="feat(main): main layout&#10;&#10;- utf-8 이슈로 인한 web.xml 추가&#10;- WebConfig.java 이미지 경로 추가">
+      <option name="closed" value="true" />
+      <created>1750811168746</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1750811168746</updated>
+    </task>
+    <task id="LOCAL-00011" summary="feat(main): main layout&#10;&#10;- utf-8 이슈로 인한 web.xml 추가&#10;- WebConfig.java 이미지 경로 추가">
+      <option name="closed" value="true" />
+      <created>1750811560290</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1750811560290</updated>
+    </task>
+    <task id="LOCAL-00012" summary="refactor(main layout): main layout&#10;&#10;- 구도 수정">
+      <option name="closed" value="true" />
+      <created>1750827390021</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1750827390021</updated>
+    </task>
+    <task id="LOCAL-00013" summary="feat(login/logout): session 추가&#10;&#10;- 로그인/로그아웃 세션">
+      <option name="closed" value="true" />
+      <created>1750831204259</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1750831204259</updated>
+    </task>
+    <task id="LOCAL-00014" summary="feat(login/logout): session 추가&#10;&#10;- 로그인/로그아웃 세션">
+      <option name="closed" value="true" />
+      <created>1750832156972</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1750832156972</updated>
+    </task>
+    <task id="LOCAL-00015" summary="refactor: header수정&#10;&#10;- 기존 Drop.jsp / Drop.css 파일 통합하여 header.jsp로 관리">
+      <option name="closed" value="true" />
+      <created>1750835470555</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1750835470555</updated>
+    </task>
+    <task id="LOCAL-00016" summary="refactor: football_shoes 헤더푸터 반영">
+      <option name="closed" value="true" />
+      <created>1750836828589</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1750836828589</updated>
+    </task>
+    <task id="LOCAL-00017" summary="refactor: 세션에 USER_ID 추가">
+      <option name="closed" value="true" />
+      <created>1750841640955</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1750841640955</updated>
+    </task>
+    <task id="LOCAL-00018" summary="refactor: 세션에 USER_ID 수정">
+      <option name="closed" value="true" />
+      <created>1750842055641</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1750842055641</updated>
+    </task>
+    <task id="LOCAL-00019" summary="fix(main): 메인배너 이미지&#10;&#10;- 이미지가 메뉴 드롭다운보다 우선되어 후순위 처리">
+      <option name="closed" value="true" />
+      <created>1750842216454</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1750842216454</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Refactor(main): 메인배너 이미지&#10;&#10;- 이미지 최신화">
+      <option name="closed" value="true" />
+      <created>1750842323098</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1750842323098</updated>
+    </task>
+    <task id="LOCAL-00021" summary="favicon 추가">
+      <option name="closed" value="true" />
+      <created>1750844882092</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1750844882092</updated>
+    </task>
+    <task id="LOCAL-00022" summary="feat : 회원가입 가능">
+      <option name="closed" value="true" />
+      <created>1750918221989</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1750918221989</updated>
+    </task>
+    <task id="LOCAL-00023" summary="feat : 회원가입 화면(JS) 유효성 검증 추가&#10;&#10;- 이메일 중복확인, 이메일 인증&#10;- 유효성 동적 처리&#10;- 기타등등(너무많음..)">
+      <option name="closed" value="true" />
+      <created>1750924127996</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1750924127996</updated>
+    </task>
+    <task id="LOCAL-00024" summary="feat : 회원가입 화면(JS) 유효성 검증 추가&#10;&#10;- 이메일 중복 검증">
+      <option name="closed" value="true" />
+      <created>1750927950630</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1750927950630</updated>
+    </task>
+    <task id="LOCAL-00025" summary="refactor : LoginController.java 오류 수정">
+      <option name="closed" value="true" />
+      <created>1750928273638</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1750928273638</updated>
+    </task>
+    <task id="LOCAL-00026" summary="feat: 회원가입시 이메일&#10;&#10;-이메일 중복확인(DB단)&#10;-이메일 인증">
+      <option name="closed" value="true" />
+      <created>1750936387062</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1750936387062</updated>
+    </task>
+    <task id="LOCAL-00027" summary="feat: 유효성검증&#10;&#10;- 비밀번호 3회 틀릴시 계정잠김">
+      <option name="closed" value="true" />
+      <created>1750941583856</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1750941583856</updated>
+    </task>
+    <task id="LOCAL-00028" summary="feat: main 페이지 포워딩&#10;&#10;- 8080에서 main">
+      <option name="closed" value="true" />
+      <created>1750985560691</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1750985560691</updated>
+    </task>
+    <task id="LOCAL-00029" summary="feat: main 페이지 포워딩&#10;&#10;- 8080에서 main">
+      <option name="closed" value="true" />
+      <created>1750986742432</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1750986742432</updated>
+    </task>
+    <task id="LOCAL-00030" summary="refactor : 회원가입 CSS 수정">
+      <option name="closed" value="true" />
+      <created>1750987422106</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1750987422106</updated>
+    </task>
+    <task id="LOCAL-00031" summary="refactor : 회원가입 CSS&#10;&#10;-회원가입 페이지 센터로 이동">
+      <option name="closed" value="true" />
+      <created>1750988747416</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1750988747416</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="fix(order): 회원가입 레지스터컨트롤.java 수정&#10;&#10;DB연결을 위한 추가 PostMapping 생성으로 인한 오류&#10;→PostMapping 중복 2개의 PostMapping 통합" />
+    <MESSAGE value="fix(order): UserService.java 수정&#10;&#10;회원가입시 패스워드 암호화 미구현" />
+    <MESSAGE value="feat(login): 로그인 기능 구현&#10;&#10;로그인 기능구현 및 회원가입 페이지 연결&#10;-&gt;로그인 화면단 검증로직 구현 user_login.js" />
+    <MESSAGE value="refactor(user): DB연결 작업 진행중&#10;&#10;- 아래 각 파일에 DB연동을 위한 코드추가&#10;- LoginRequestDto, LoginUserDto, UserMapp.java, UserMapper.xml, UserService.java" />
+    <MESSAGE value="refactor : 충돌해결&#10;&#10;- 충돌해결" />
+    <MESSAGE value="refactor : DB연결 수정&#10;&#10;- 경로 충돌 재조정&#10;toyproject.controller.dto.LoginUserDto&#10;- 컬럼명 DB 컬럼과 동기화" />
+    <MESSAGE value="feat(main): main layout&#10;&#10;- utf-8 이슈로 인한 web.xml 추가&#10;- WebConfig.java 이미지 경로 추가" />
+    <MESSAGE value="refactor(main layout): main layout&#10;&#10;- 구도 수정" />
+    <MESSAGE value="feat(login/logout): session 추가&#10;&#10;- 로그인/로그아웃 세션" />
+    <MESSAGE value="refactor: header수정&#10;&#10;- 기존 Drop.jsp / Drop.css 파일 통합하여 header.jsp로 관리" />
+    <MESSAGE value="refactor: football_shoes 헤더푸터 반영" />
+    <MESSAGE value="refactor: 세션에 USER_ID 추가" />
+    <MESSAGE value="refactor: 세션에 USER_ID 수정" />
+    <MESSAGE value="fix(main): 메인배너 이미지&#10;&#10;- 이미지가 메뉴 드롭다운보다 우선되어 후순위 처리" />
+    <MESSAGE value="Refactor(main): 메인배너 이미지&#10;&#10;- 이미지 최신화" />
+    <MESSAGE value="favicon 추가" />
+    <MESSAGE value="feat : 회원가입 가능" />
+    <MESSAGE value="feat : 회원가입 화면(JS) 유효성 검증 추가&#10;&#10;- 이메일 중복확인, 이메일 인증&#10;- 유효성 동적 처리&#10;- 기타등등(너무많음..)" />
+    <MESSAGE value="feat : 회원가입 화면(JS) 유효성 검증 추가&#10;&#10;- 이메일 중복 검증" />
+    <MESSAGE value="refactor : LoginController.java 오류 수정" />
+    <MESSAGE value="feat: 회원가입시 이메일&#10;&#10;-이메일 중복확인(DB단)&#10;-이메일 인증" />
+    <MESSAGE value="feat: 유효성검증&#10;&#10;- 비밀번호 3회 틀릴시 계정잠김" />
+    <MESSAGE value="feat: main 페이지 포워딩&#10;&#10;- 8080에서 main" />
+    <MESSAGE value="refactor : 회원가입 CSS 수정" />
+    <MESSAGE value="refactor : 회원가입 CSS&#10;&#10;-회원가입 페이지 센터로 이동" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor : 회원가입 CSS&#10;&#10;-회원가입 페이지 센터로 이동" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/toyproject/controller/ProductController.java</url>
+          <line>35</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

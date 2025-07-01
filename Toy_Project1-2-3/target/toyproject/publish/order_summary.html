@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>축구는 종교다</title>
+    <link rel="stylesheet" href="order_summary.css"/>
+</head>
+<body>
+<div class="order_title">주문완료</div>
+
+<div class="container">
+    <div class="main_content">
+        <div class="order_info_title">주문요약</div>
+
+        <div class="order_info_content thick_border">
+            <div class="order_summary_info">
+                <div class="summary_item">
+                    <span class="summary_label">주문번호:</span>
+                    <span class="summary_value" id="order_number">-</span>
+                </div>
+                <div class="summary_item">
+                    <span class="summary_label">주문일시:</span>
+                    <span class="summary_value" id="order_date">-</span>
+                </div>
+                <div class="summary_item">
+                    <span class="summary_label">주문자:</span>
+                    <span class="summary_value" id="summary_orderer_name">-</span>
+                </div>
+                <div class="summary_item">
+                    <span class="summary_label">결제수단:</span>
+                    <span class="summary_value" id="summary_payment_method">-</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="order_info_title">주문상품 정보</div>
+        <div class="order_info_content">
+            <div class="product_item">
+                <div class="product_details">
+                    <div class="product_name" id="summary_product_name">-</div>
+                    <div class="product_option" id="summary_product_option">-</div>
+                </div>
+                <div class="product_quantity" id="summary_product_quantity">-</div>
+                <div class="product_price" id="summary_product_price">-</div>
+            </div>
+        </div>
+
+        <div class="order_info_title">주문자 정보</div>
+        <div class="order_info_content">
+            <div class="content-form">
+                <label>주문하시는 분</label>
+                <div class="content-value" id="display_orderer_name">-</div>
+            </div>
+            <div class="content-form">
+                <label>주소</label>
+                <div class="content-value" id="display_orderer_address">-</div>
+            </div>
+            <div class="content-form">
+                <label>휴대폰 번호</label>
+                <div class="content-value" id="display_orderer_phone">-</div>
+            </div>
+            <div class="content-form">
+                <label>이메일</label>
+                <div class="content-value" id="display_orderer_email">-</div>
+            </div>
+        </div>
+
+        <div class="order_info_title">배송 정보</div>
+        <div class="order_info_content">
+            <div class="content-form">
+                <label>받으실 분</label>
+                <div class="content-value" id="display_receiver_name">-</div>
+            </div>
+            <div class="content-form">
+                <label>받으실 곳</label>
+                <div class="content-value" id="display_receiver_address">-</div>
+            </div>
+            <div class="content-form">
+                <label>휴대폰 번호</label>
+                <div class="content-value" id="display_receiver_phone">-</div>
+            </div>
+            <div class="content-form">
+                <label>남기실 말씀</label>
+                <div class="content-value" id="display_delivery_message">-</div>
+            </div>
+        </div>
+
+        <div class="order_info_title">결제 정보</div>
+        <div class="order_info_content">
+            <div class="content-form">
+                <label>결제수단</label>
+                <div class="content-value" id="display_payment_method">-</div>
+            </div>
+            <div class="content-form">
+                <label>적용 적립금</label>
+                <div class="content-value" id="display_bonus_point">-</div>
+            </div>
+        </div>
+
+        <div class="order_info_title">최종 결제사항</div>
+        <div class="order_info_content">
+            <div class="summary_line">
+                <div>총 상품 금액</div>
+                <div id="display_total_product_amount">-</div>
+            </div>
+            <div class="summary_line">
+                <div>총 할인 금액</div>
+                <div id="display_total_discount_amount">-</div>
+            </div>
+            <div class="summary_line">
+                <div>총 배송비</div>
+                <div id="display_total_shipping_fee">-</div>
+            </div>
+            <div class="summary_total">
+                <div>최종 결제금액</div>
+                <div id="display_final_amount">-</div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="order_summary.js"></script>
+</body>
+</html>

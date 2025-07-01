@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="toyproject.mapper.CartMapper">
+    <select id="findCartItemsCountByUserId" parameterType="UserCartByIDQueryParam" resultType="int">
+        SELECT count(*)
+        FROM CART c
+                 INNER JOIN PRODUCT p ON c.PRODUCT_ID = p.PRODUCT_ID
+        WHERE c.USER_ID = #{userId}
+    </select>
+
+    <select id="findCartItemsByUserId" parameterType="UserCartByIDQueryParam" resultType="UserCartResult">
+        SELECT c.PRODUCT_ID       AS productId,
+               p.IMG              AS productImg,
+               p.PRODUCT_NAME     AS productName,
+               c.SIZE             AS size,
+               c.PRODUCT_QUANTITY AS cartProductQuantity,
+               i.CURRENT_QUANTITY AS stockQuantity,
+               p.PRICE            AS productPrice
+        FROM CART c
+                 INNER JOIN PRODUCT p ON c.PRODUCT_ID = p.PRODUCT_ID
+                 INNER JOIN INVENTORY i ON c.SIZE = i.SIZE AND c.PRODUCT_ID = i.PRODUCT_ID
+        WHERE c.USER_ID = #{userId}    </select>
+
+    <select id="findCartItemsPriceByUserId" parameterType="UserCartByIDQueryParam" resultType="UserCartPriceResult">
+        SELECT COUNT(*)                             AS totalProductCount,
+               SUM(p.PRICE)                         AS totalPrice,
+               SUM(FLOOR(p.PRICE * 0.01 / 10) * 10) AS totalDiscount
+        FROM CART c
+                 INNER JOIN PRODUCT p ON c.PRODUCT_ID = p.PRODUCT_ID
+        WHERE c.USER_ID = #{userId};
+    </select>
+
+    <select id="findAvailableSizesByProductId" parameterType="int" resultType="SizeStockResult">
+        SELECT p.PRODUCT_ID       AS productId,
+               p.PRODUCT_NAME     AS productName,
+               i.SIZE             AS size,
+               i.CURRENT_QUANTITY AS stockQuantity
+        FROM INVENTORY i
+                 INNER JOIN PRODUCT p ON i.PRODUCT_ID = p.PRODUCT_ID
+        WHERE i.PRODUCT_ID = #{productId}
+    </select>
+
+    <select id="findCartItemBySize" parameterType="UserCartItemQuantityQueryParam" resultType="java.lang.Integer">
+        SELECT PRODUCT_QUANTITY AS productQuantity
+        FROM CART
+        WHERE USER_ID = #{userId}
+          AND PRODUCT_ID = #{productId}
+          AND SIZE = #{size}
+    </select>
+
+    <delete id="deleteCartItem" parameterType="UserCartUpdateQueryParam">
+        DELETE
+        FROM CART
+        WHERE USER_ID = #{userId}
+          AND PRODUCT_ID = #{productId}
+          AND SIZE = #{size}
+    </delete>
+
+    <insert id="insertCartItem">
+        INSERT INTO CART (USER_ID, PRODUCT_ID, SIZE, PRODUCT_QUANTITY, CART_REG)
+        VALUES (#{userId}, #{productId}, #{size}, #{productQuantity}, now())
+    </insert>
+
+    <update id="updateCartItemQuantity" parameterType="UserCartUpdateQueryParam">
+        UPDATE CART
+        SET PRODUCT_QUANTITY = #{productQuantity}
+        WHERE USER_ID = #{userId}
+          AND PRODUCT_ID = #{productId}
+          AND SIZE = #{size}
+    </update>
+
+        <select id="findStocksByProductOptions"
+            parameterType="java.util.List"
+            resultType="toyproject.mapper.result.StockCheckResult">
+        SELECT
+            p.PRODUCT_ID AS productId,
+            p.PRODUCT_NAME AS productName,
+            i.SIZE AS size,
+            i.CURRENT_QUANTITY AS stock
+        FROM INVENTORY i
+        JOIN PRODUCT p ON i.PRODUCT_ID = p.PRODUCT_ID
+        WHERE (i.PRODUCT_ID, i.SIZE) IN
+        <foreach item="item" collection="list" open="(" separator="," close=")">
+            (#{item.productId}, #{item.size})
+        </foreach>
+    </select>
+</mapper>
