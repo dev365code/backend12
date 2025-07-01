@@ -87,31 +87,6 @@ Toy_Project1-2-3/
 - MySQL 8
 - IntelliJ IDEA 또는 Eclipse
 
-### ⚙설치 및 실행
-1. **프로젝트 클론**
-   ```bash
-   git clone https://github.com/your-repo/soccer-is-religion.git
-   cd soccer-is-religion
-   ```
-
-2. **데이터베이스 설정**
-   ```sql
-   CREATE DATABASE soccer_shop;
-   -- ERD에 따른 테이블 생성 SQL 실행
-   ```
-
-3. **설정 파일 수정**
-   ```properties
-   # application.properties
-   spring.datasource.url=jdbc:mysql://localhost:3306/soccer_shop
-   spring.datasource.username=your_username
-   spring.datasource.password=your_password
-   ```
-
-4. **애플리케이션 실행**
-   - Tomcat 서버 시작
-   - `http://localhost:8080` 접속
-
 ## 주요 화면 (Screenshots)
 
 ### 메인 페이지
