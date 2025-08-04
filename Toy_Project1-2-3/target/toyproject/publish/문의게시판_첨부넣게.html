@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>문의게시판(1:1문의)</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input, select, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #007BFF;
+      color: white;
+      font-size: 16px;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+<h2 style="text-align: center;">문의게시판(1:1)</h2>
+  <!-- <h2>문의게시판</h2> -->
+  <form action="/submit-inquiry" method="POST" enctype="multipart/form-data">
+    
+    <label for="category">말머리</label>
+    <select id="category" name="category" required>
+      <option value="">-- 선택하세요 --</option>
+      <option value="상품문의">상품문의</option>
+      <option value="배송문의">배송문의</option>
+      <option value="환불문의">환불문의</option>
+      <option value="기타">기타</option>
+    </select>
+
+    <label for="author">작성자</label>
+    <input type="text" id="author" name="author" required>
+
+    <label for="title">제목</label>
+    <input type="text" id="title" name="title" required>
+
+    <label for="content">본문</label>
+    <textarea id="content" name="content" rows="6" required></textarea>
+
+    <label for="file">첨부파일</label>
+    <input type="file" id="file" name="file">
+
+    <label for="captcha">자동등록방지</label>
+    <input type="text" id="captcha" name="captcha" placeholder="보안문자 입력" required>
+    <!-- 실제 서비스에서는 CAPTCHA 이미지나 reCAPTCHA를 연동해야 합니다 -->
+
+    <button type="submit">저장</button>
+  </form>
+
+</body>
+</html>

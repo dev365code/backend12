@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="toyproject.mapper.BoardMapper">
+    <!-- 상단 고정 공지 전체 조회 (기존 유지) -->
+    <select id="selectTopNotices" resultType="NoticeDto">
+        SELECT NOTICE_ID      AS noticeId,
+               NOTICE_TITLE   AS noticeTitle,
+               NOTICE_CONTENT AS noticeContent,
+               IMG            AS img,
+               CREATED_AT     AS createdAt,
+               ADMIN_ID       AS adminId,
+               IS_TOP         AS isTop
+        FROM NOTICE_BOARD
+        WHERE IS_TOP = 1
+        ORDER BY CREATED_AT DESC
+    </select>
+
+    <!-- 일반 공지 페이징 처리 - 정렬 기준: 생성일자 최신순 -->
+    <select id="selectNormalNotices" resultType="NoticeDto">
+        SELECT NOTICE_ID      AS noticeId,
+               NOTICE_TITLE   AS noticeTitle,
+               NOTICE_CONTENT AS noticeContent,
+               IMG            AS img,
+               CREATED_AT     AS createdAt,
+               ADMIN_ID       AS adminId,
+               IS_TOP         AS isTop
+        FROM NOTICE_BOARD
+        WHERE IS_TOP = 0
+        ORDER BY CREATED_AT DESC
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <!-- 일반 공지 총 개수 -->
+    <select id="countNormalNotices" resultType="int">
+        SELECT COUNT(*)
+        FROM NOTICE_BOARD
+        WHERE IS_TOP = 0
+    </select>
+
+    <select id="selectAllFaqs" resultType="FaqDto">
+        SELECT FAQ_ID       AS faqId,
+               FAQ_CATEGORY AS faqCategory,
+               FAQ_TITLE    AS faqTitle,
+               FAQ_CONTENT  AS faqContent
+        FROM FAQ_BOARD
+        ORDER BY FAQ_ID DESC
+    </select>
+
+    <select id="selectUserInquiries" resultType="GeneralBoardDto">
+        SELECT GENERAL_BOARD_ID      AS generalBoardId,
+               GENERAL_BOARD_TITLE   AS generalBoardTitle,
+               GENERAL_BOARD_CONTENT AS generalBoardContent,
+               CONTENT_TYPE          AS contentType,
+               USER_ID               AS userId,
+               IMG                   AS img,
+               IS_REPLIED            AS replied,
+               REPLY_CONTENT         AS replyContent,
+               CREATED_AT            AS createdAt,
+               REPLIED_AT            AS repliedAt,
+               ADMIN_ID              AS adminId
+        FROM GENERAL_BOARD
+        WHERE USER_ID = #{userId}
+        ORDER BY CREATED_AT DESC
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <select id="countUserInquiries" resultType="int">
+        SELECT COUNT(*)
+        FROM GENERAL_BOARD
+        WHERE USER_ID = #{userId}
+    </select>
+
+    <insert id="insertInquiry" parameterType="GeneralBoardDto">
+        INSERT INTO GENERAL_BOARD (GENERAL_BOARD_TITLE,
+                                   GENERAL_BOARD_CONTENT,
+                                   CONTENT_TYPE,
+                                   USER_ID,
+                                   IS_REPLIED,
+                                   CREATED_AT)
+        VALUES (#{generalBoardTitle},
+                #{generalBoardContent},
+                #{contentType},
+                #{userId},
+                0,
+                NOW())
+    </insert>
+</mapper>

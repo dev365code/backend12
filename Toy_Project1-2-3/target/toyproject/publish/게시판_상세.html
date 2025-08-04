@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>축구는 종교다</title>
+
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 40px;
+      background-color: #f8f8f8;
+    }
+    h1 {
+      text-align: center;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: white;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
+      text-align: center;
+    }
+    th {
+      background-color: #f0f0f0;
+    }
+    .write-button {
+      margin: 20px 0;
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #0e4ec5;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .write-button:hover {
+      background-color: hsl(224, 93%, 62%);
+    }
+    #writeForm {
+      display: none;
+      margin-top: 20px;
+      background-color: #fff;
+      padding: 20px;
+      border: 1px solid #ddd;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    #writeForm input, #writeForm textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    #writeForm button {
+      padding: 10px 20px;
+      background-color: #2196F3;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #writeForm button:hover {
+      background-color: #0b7dda;
+    }
+  </style>
+</head>
+<body>
+  <h1>게시판 상세</h1>
+
+  <!-- <button type="submit">작성 완료</button> -->
+  <button class="write-button" onclick="toggleWriteForm()">상세보기</button></div>
+<!-- <button id="ask-question-btn">질문등록</button> -->
+  <div id="writeForm">
+    <h3>세부내용</h3>
+    <form onsubmit="sQubmitPost(event)">
+      <input type="text" placeholder="번호" required>
+      <input type="text" placeholder="제목" required>
+      <textarea rows="5" placeholder="내용을 입력하세요..." required></textarea>
+      <div style="text-align: center;">
+      <button type="submit">작성 완료</button></div>
+       <!-- <button>질문등록</button> -->
+
+</div>
+    </form>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>번호</th>
+        <th>제목</th>
+        <th>작성일시</th>
+         <th>글쓴이</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td><a href="로그인.html">첫 번째 게시글입니다</a></td>
+        <td>홍길동</td>
+        <td>2025-06-17</td>
+        <td>123</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <script>
+    function toggleWriteForm() {
+      const form = document.getElementById("writeForm");
+      form.style.display = form.style.display === "none" ? "block" : "none";
+    }
+
+    function submitPost(event) {
+      event.preventDefault();
+      alert("글이 작성되었습니다 (실제 저장 기능은 서버 연동 필요)");
+      // 폼 초기화 및 숨김
+      document.querySelector('#writeForm form').reset();
+      document.getElementById("writeForm").style.display = "none";
+    }
+  </script>
+
+
+
+<script>
+  // 로그인 여부를 확인하는 변수 (예: 세션에서 가져온 정보)
+  const isLoggedIn = false; // 실제로는 서버에서 상태를 받아야 함
+
+  document.getElementById('ask-question-btn').addEventListener('click', () => {
+    if (!isLoggedIn) {
+      // 로그인되지 않은 경우 로그인 페이지로 이동
+      window.location.href = '/login';
+    } else {
+      // 로그인된 경우 질문 등록 페이지로 이동
+      window.location.href = '/ask';
+    }
+  });
+</script>
+
+
+
+</body>
+</html>

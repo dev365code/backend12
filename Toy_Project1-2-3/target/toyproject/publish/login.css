@@ -1,0 +1,66 @@
+body {
+    font-family: sans-serif;
+    background-color: #fff;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 400px;
+    margin: 80px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin: 6px 0;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+label {
+    display: block;
+    margin: 10px 0;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    background-color: black;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.join {
+    margin-top: 10px;
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+}
+
+.sns {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.sns p {
+    margin-bottom: 10px;
+}
+
+.sns img {
+    width: 36px;
+    margin: 0 10px;
+    vertical-align: middle;
+}

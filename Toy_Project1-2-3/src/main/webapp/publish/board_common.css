@@ -1,0 +1,488 @@
+body {
+    font-family: 'Inter', 'Noto Sans KR', sans-serif;
+    font-size: 14px; /* 기본 글씨 크기 ↓ */
+    background: #fff;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+.layout {
+    display: flex;
+    margin: 0 auto;
+    padding: 30px 0; /* 상하만 적용, 좌우는 full-centered에서 해결 */
+    margin-top: 40px; /* 적용 안될 수도 있음 */
+    padding-top: 40px !important; /* /* 또는 padding-top */
+
+}
+
+.sidebar {
+    width: 200px;
+    margin-right: 30px;
+}
+
+.sidebar a {
+    color: inherit; /* 기본 글자색 상속 */
+    text-decoration: none; /* 밑줄 제거 */
+}
+
+.sidebar h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px;
+}
+
+.sidebar li {
+    margin-bottom: 6px;
+    cursor: pointer;
+}
+
+.contact-box {
+    border: 1px solid #ddd;
+    padding: 15px;
+    font-size: 14px;
+    background: #f9f9f9;
+}
+
+.content {
+    flex: 1;
+    padding-bottom: 40px;
+}
+
+.page-title {
+    font-size: 20px; /* ↓ 24px → 20px */
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+
+.faq-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    gap: 6px;
+}
+
+.tab {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border: 1px solid #ddd;
+    background: #f8f8f8;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.tab img {
+    width: 20px;
+    height: 20px;
+}
+
+.tab.active {
+    background: #333;
+    color: #fff;
+}
+
+.search-box {
+    display: flex;
+    margin-bottom: 30px;
+}
+
+.search-box input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-right: none;
+}
+
+.search-box button {
+    padding: 10px 20px;
+    background: #eee;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    border-radius: inherit;
+}
+
+.faq-answer {
+    display: none; /* ❗ 기본 숨김 처리 */
+    background: #fafafa; /* ✅ 회색 음영 */
+    padding: 16px 20px; /* ✅ 안쪽 여백 */
+    margin-top: 12px;
+    border-radius: 6px; /* ✅ 모서리 둥글게 */
+    line-height: 1.6;
+    color: #444;
+    font-size: 13px;
+    white-space: pre-line; /* ✅ 줄바꿈 반영되게 */
+}
+
+.faq-item.active .faq-answer {
+    display: flex; /* ✅ 펼쳐졌을 때 flex 구조 */
+    gap: 10px;
+}
+
+.faq-label {
+    font-weight: bold;
+    min-width: 16px;
+    color: #333;
+}
+
+.faq-content {
+    flex: 1;
+}
+
+.faq-list {
+    border-top: 1px solid #ccc;
+}
+
+.faq-item {
+    border-bottom: 1px solid #eee;
+    padding: 15px 0;
+}
+
+.question {
+    font-size: 15px;
+    position: relative; /* ✅ 이거 추가 */
+    padding-right: 20px; /* ✅ 오른쪽 여백 확보 */
+}
+
+.question::after {
+    content: "▼";
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    color: #999;
+    transition: transform 0.2s ease; /* ✅ 부드러운 전환 */
+}
+
+.faq-item.active .question::after {
+    content: "▲";
+}
+
+.faq-item.active .question::after {
+    content: "▲";
+}
+
+.answer {
+    font-size: 13px;
+    color: #555;
+    display: none; /* ✅ 처음엔 안 보이도록 설정 */
+}
+
+.faq-item.active .answer {
+    display: block;
+}
+
+.faq-icons {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 👉 무조건 5개로 고정 */
+    gap: 40px;
+    margin-bottom: 30px;
+    justify-items: center;
+}
+
+.faq-icon {
+    text-align: center;
+    border: 1px solid #ddd;
+    padding: 12px;
+    width: 100%; /* ✅ 그리드 셀에 맞춰 꽉 차게 */
+    max-width: 140px; /* ✅ 너무 커지지 않도록 제한 */
+    height: 110px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: background 0.3s;
+}
+
+.faq-icon img {
+    width: 30px; /* ✅ 조금 줄임 */
+    height: 30px;
+    margin-bottom: 8px;
+    object-fit: contain;
+}
+
+.faq-icon span {
+    font-size: 13px; /* ✅ 텍스트 크기도 약간 줄임 */
+}
+
+.faq-icon:hover {
+    background-color: #f2f2f2;
+}
+
+.full-centered {
+    margin: 0 auto;
+    max-width: 1000px; /* 더 좁혀서 중앙 집중 */
+    padding: 0 60px; /* 좌우 여백 더 넉넉하게 */
+}
+
+.faq-icons {
+    justify-content: center;
+}
+
+.faq-icon {
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.notice-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    margin-top: 20px;
+}
+
+.notice-table th, .notice-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+.notice-table th {
+    background-color: #f4f4f4;
+}
+
+.badge {
+    background-color: #d93025;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    gap: 6px;
+}
+
+.page-btn {
+    padding: 6px 12px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 4px;
+}
+
+.page-btn:hover {
+    background-color: #f0f0f0;
+}
+
+.page-btn.active {
+    background-color: #333;
+    color: white;
+    font-weight: bold;
+}
+
+.faq-toggle-icon {
+    font-size: 16px; /* 기존보다 큼 */
+    color: #999;
+    margin-left: auto;
+    transition: transform 0.2s ease;
+}
+
+.faq-item.active .faq-toggle-icon {
+    transform: rotate(180deg); /* 아래 → 위 화살표로 회전 */
+}
+
+.faq-question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 15px;
+    font-weight: 500;
+    gap: 10px;
+    position: relative;
+}
+
+.faq-title {
+    flex: 1;
+    color: #222;
+}
+
+.faq-date {
+    color: #888;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.faq-toggle-icon {
+    font-size: 16px;
+    color: #999;
+    margin-left: 8px;
+    transition: transform 0.2s ease;
+}
+
+.faq-item.active .faq-toggle-icon {
+    transform: rotate(180deg);
+}
+
+.inquiry-btn {
+    padding: 8px 14px;
+    background: #333;
+    color: white;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.inquiry-form input,
+.inquiry-form select,
+.inquiry-form textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 16px;
+}
+
+/* textarea 높이 추가 설정 */
+.inquiry-form textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 60px auto;
+    padding: 20px 30px;
+    border-radius: 8px;
+    width: 500px;
+    position: relative;
+}
+
+.modal-content h2 {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.modal-content label {
+    display: block;
+    margin-top: 12px;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+.modal-content input[type="text"],
+.modal-content select,
+.modal-content textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.modal-content textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+.captcha-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.captcha-box {
+    background: #eee;
+    padding: 8px 12px;
+    font-family: monospace;
+    font-size: 18px;
+    letter-spacing: 2px;
+    border: 1px solid #ccc;
+}
+
+.btn-wrap {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.btn-wrap button {
+    padding: 8px 20px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    background: white;
+    cursor: pointer;
+}
+
+.btn-wrap .primary {
+    background: #000;
+    color: white;
+    border: none;
+}
+
+.close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.title-with-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.sidebar .active {
+    font-weight: bold;
+    color: #000;
+}
+
+    .notice-title {
+        color: #333;
+        text-decoration: none;
+    }
+
+    .notice-title:visited,
+    .notice-title:active,
+    .notice-title:focus {
+        color: #333;
+        text-decoration: none;
+    }
+
+.notice-title:hover {
+    text-decoration: none;
+    color: #333;
+}
+
+#noticeModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5); /* 어두운 배경 */
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  overflow: auto; /* 내용 많으면 스크롤 생기도록 */
+}
