@@ -1,2 +1,21 @@
 .DS_Store
 **/.DS_Store
+
+# IDE files
+.idea/
+*.iml
+
+# Build outputs
+out/
+target/
+build/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb
+
+# Database properties (민감정보)
+**/jdbc.properties
+
+# Logs
+*.log
