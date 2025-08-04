@@ -1,0 +1,458 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+a{
+    text-decoration: none;
+    color: black;
+}
+.product{
+    padding: 30px;
+    max-width: 1000px;
+    margin: auto;
+}
+
+.product-detail {
+    display: flex;
+    padding: 30px;
+    max-width: 1000px;
+    margin: auto;
+}
+
+.image-box {
+    flex: 1;
+    text-align: center;
+}
+
+.product-image {
+    width: 450px ;
+    height: 400px ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.product-image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+
+.rating {
+    margin-top: 10px;
+    text-align: left;
+}
+
+.info-box {
+    flex: 1;
+    padding-left: 40px;
+
+}
+.info-box p{
+    padding-bottom: 15px;
+    font-size: 14px;
+}
+
+.product-title {
+    font-size: 20px;
+    margin-bottom: 20px;
+    margin-top: 5px;
+    font-weight: bold;
+
+}
+
+.product-info {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+    line-height: 1.6;
+    color: #666;
+}
+
+.size-section {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.size-label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.size-guide {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 12px;
+    color: #666;
+}
+
+/*.size-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}*/
+.size-btn {
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    background: white;
+    cursor: pointer;
+    margin: 4px;
+    border-radius: 5px;
+    transition: 0.2s;
+}
+
+.size-btn:hover {
+    background: #f5f5f5;
+}
+
+.size-btn {
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+    background: white;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.size-btn.active {
+    background: black;
+    color: white;
+    border-color: black;
+}
+
+/* 사이즈 선택 후 표시되는 선택 정보 */
+.selected-product {
+
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.selected-info {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 130px 120px 120px 50px;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.price{
+    text-align: right;
+}
+
+.coupon {
+    background: #f0f0f0;
+    padding: 2px 6px;
+    border-radius: 3px;
+}
+
+.quantity {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.quantity button {
+    width: 24px;
+    height: 24px;
+    border:none;
+    font-size: 18px;
+}
+
+.price {
+    font-weight: bold;
+}
+
+.remove {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #999;
+    cursor: pointer;
+}
+
+.total {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.total-price {
+    float: right;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    flex: 1;
+    padding: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    border: 1px solid #333;
+    background: white;
+}
+
+.btn.cart {
+    color: #333;
+}
+
+.btn.buy {
+    background: #111;
+    color: white;
+}
+
+.product-tabs {
+    border-top: 1px solid #ddd;
+    margin-top: 60px;
+    padding: 30px 0;
+}
+
+.tab-menu {
+    display: flex;
+    padding: 0;
+    margin: 0;
+    border-bottom: 2px solid #eee;
+    list-style: none;
+
+}
+
+.tab-menu .tab {
+    flex: 1; /* ← 각각 1/3 너비 */
+    text-align: center;
+    padding: 16px 0 12px;
+    font-size: 16px;
+    cursor: pointer;
+    position: relative;
+    color: #666;
+}
+
+.tab-menu .tab.active {
+    font-weight: bold;
+    color: #000;
+    border-bottom: 2px solid #000;
+}
+
+.tab-menu .count {
+    background: #eee;
+    padding: 2px 8px;
+    border-radius: 50%;
+    font-size: 12px;
+    margin-left: 6px;
+}
+
+.tab-content p {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.8;
+    margin-bottom: 10px;
+    color: #000; /* 또는 원하는 색상 */
+}
+
+.tab-content p:nth-child(1){
+    padding-top: 10px;
+}
+
+.review-summary {
+    background: #f5f5f5;
+    padding: 20px ;
+    margin-bottom: 30px;
+}
+
+.review-summary p {
+    margin: 5px 0;
+    font-size: 16px;
+}
+
+.review-summary .rating {
+    font-weight: bold;
+    font-size: 20px;
+}
+.rating h2{
+    font-weight: bold;
+    padding-left: 30px;
+}
+
+.review-list h3 {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.review-item {
+    border-top: 1px solid #ddd;
+    padding: 15px 0;
+    display: flex;
+    gap: 20px;
+}
+
+.stars {
+    color: #000;
+    font-size: 20px;
+}
+
+.review-content p {
+    margin: 0 0 8px 0;
+}
+
+.review-content .count {
+    font-weight: normal;
+    font-size: 13px;
+    color: #555;
+}
+
+.review-meta {
+    font-size: 13px;
+    color: #888;
+    display: flex;
+    gap: 10px;
+}
+
+.review-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 30px;
+    margin-bottom: 40px;
+}
+
+.review-buttons .btn {
+    padding: 6px 12px;
+    font-size: 13px;
+    min-width: unset; /* 가로 폭 줄이기 */
+    max-width: 120px;
+    width: auto;
+    border: 1px solid #000;
+    background: #fff;
+    cursor: pointer;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.review-buttons .write-review {
+    background: #000;
+    color: #fff;
+}
+
+/* 상품문의 */
+.inquiry-section {
+    padding: 30px 0;
+    font-size: 14px;
+
+}
+
+.inquiry-table {
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+
+.inquiry-row {
+    display: flex;
+    padding: 12px 0;
+    border-top: 1px solid #eee;
+    align-items: center;
+}
+
+.inquiry-row > div {
+    padding: 0 10px;
+    font-size: 14px;
+}
+
+.inquiry-row .no {
+    width: 40px;
+    text-align: center;
+}
+
+.inquiry-row .title {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.inquiry-row .writer {
+    width: 100px;
+    text-align: right;
+    color: #666;
+}
+
+.inquiry-row .date {
+    width: 100px;
+    text-align: right;
+    color: #666;
+}
+
+.inquiry-row .status {
+    width: 80px;
+    text-align: right;
+    font-weight: bold;
+    color: #333;
+}
+
+/* 문의하기 버튼 */
+.inquiry-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.inquiry-footer .pagination {
+    font-size: 14px;
+    color: #333;
+}
+
+.inquiry-btn {
+    padding: 6px 14px;
+    font-size: 13px;
+    background: #000;
+    max-width: 120px;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+/* ✅ 간단한 모달 스타일 */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0; top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px 30px;
+    border-radius: 6px;
+    width: 400px;
+    text-align: center;
+}
+
+.modal-content button {
+    margin: 10px;
+    padding: 8px 20px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#goCart {
+    background-color: #333;
+    color: #fff;
+}
+
+#closeModal {
+    background-color: #fff;
+    color: #333;
+    border: 1px solid #ccc;
+}

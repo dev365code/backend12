@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>축구는 종교다</title>
+    <link rel="stylesheet" href="board_common.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+</head>
+<body>
+<div class="layout full-centered">
+    <aside class="sidebar">
+        <h2>고객센터</h2>
+        <ul>
+            <li><a href="notice.html">공지사항</a></li>
+            <li><a href="faq.html">Q&A</a></li>
+            <li><a href="inquiry.html">1:1문의</a></li> <!-- 나중에 inquiry.html 만들면 연결됨 -->
+        </ul>
+    </aside>
+
+    <main class="content">
+        <h1 class="page-title">자주 묻는 질문</h1>
+
+        <div class="faq-icons">
+            <div class="faq-icon" data-category="회원가입/정보">
+                <i class="fa-solid fa-user fa-4x"></i>
+                <span>회원가입/정보</span>
+            </div>
+            <div class="faq-icon" data-category="결제/배송">
+                <i class="fa-solid fa-box fa-4x"></i>
+                <span>결제/배송</span>
+            </div>
+            <div class="faq-icon" data-category="A/S 및 심의">
+                <i class="fa-solid fa-wrench fa-4x"></i>
+                <span>A/S 및 심의</span>
+            </div>
+            <div class="faq-icon" data-category="교환/반품/환불">
+                <i class="fa-solid fa-rotate-left fa-4x"></i>
+                <span>교환/반품/환불</span>
+            </div>
+            <div class="faq-icon" data-category="마일리지 적립">
+                <i class="fa-solid fa-coins fa-4x"></i>
+                <span>마일리지 적립</span>
+            </div>
+        </div>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="검색어를 입력하세요"/>
+            <button>🔍</button>
+        </div>
+
+        <div id="noticeSection" style="display: none;">
+            <h1 class="page-title">공지사항</h1>
+            <table class="notice-table">
+                <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>날짜</th>
+                    <th>작성자</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><span class="badge">공지</span></td>
+                    <td>카포스토어 DRAW 공지</td>
+                    <td>2024.09.20</td>
+                    <td>관리자</td>
+                </tr>
+                <tr>
+                    <td><span class="badge">공지</span></td>
+                    <td>주문마감시간 변경안내</td>
+                    <td>2020.06.29</td>
+                    <td>관리자</td>
+                </tr>
+                <tr>
+                    <td>74</td>
+                    <td>[CAPO DRAW] PREDATOR MANIA</td>
+                    <td>2025.04.11</td>
+                    <td>관리자</td>
+                </tr>
+                <!-- ... 기타 항목 생략 가능 -->
+                </tbody>
+            </table>
+        </div>
+
+        <div id="faqSection" class="faq-list">
+            <div class="faq-item" data-category="결제/배송">
+                <div class="faq-question">
+                    <span class="faq-label">Q</span>
+                    <span class="faq-title">[결제/배송] 배송비는 어떻게 되나요?</span>
+                    <span class="faq-toggle-icon">▾</span>
+                </div>
+                <div class="faq-answer">
+                    <span class="faq-label">A</span>
+                    <div class="faq-content">
+                        조건부 무료배송 혹은 2,500원입니다.
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item" data-category="결제/배송">
+                <div class="faq-question">
+                    <span class="faq-label">Q</span>
+                    <span class="faq-title">[결제/배송] 주문한 상품은 언제 배송되나요?</span>
+                    <span class="faq-toggle-icon">▾</span>
+                </div>
+                <div class="faq-answer">
+                    <span class="faq-label">A</span>
+                    <div class="faq-content">
+                        영업일 기준 2~3일 소요됩니다.
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item" data-category="A/S 및 심의">
+                <div class="faq-question">
+                    <span class="faq-label">Q</span>
+                    <span class="faq-title">[A/S 및 심의] 제품 불량은 어떻게 처리되나요?</span>
+                    <span class="faq-toggle-icon">▾</span>
+                </div>
+                <div class="faq-answer">
+                    <span class="faq-label">A</span>
+                    <div class="faq-content">
+                        고객센터를 통해 A/S 요청 가능합니다.
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item" data-category="회원가입/정보">
+                <div class="faq-question">
+                    <span class="faq-label">Q</span>
+                    <span class="faq-title">[회원가입/정보] 회원탈퇴는 어떻게 하나요?</span>
+                    <span class="faq-toggle-icon">▾</span>
+                </div>
+                <div class="faq-answer">
+                    <span class="faq-label">A</span>
+                    <div class="faq-content">
+                        마이페이지 &gt; 회원탈퇴 메뉴에서 가능합니다.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+<script src="https://kit.fontawesome.com/f350009f47.js" crossorigin="anonymous"></script>
+<script src="board_common.js"></script>
+</body>
+</html>

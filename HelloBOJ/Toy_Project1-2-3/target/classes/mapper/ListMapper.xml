@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="toyproject.mapper.ListMapper">
+    <!-- ➊ NEW 상품 전체 개수 -->
+    <select id="selectNewProductCount" resultType="int">
+        SELECT COUNT(*)
+        FROM PRODUCT
+        WHERE IS_NEW = 1
+    </select>
+
+    <!-- ➋ NEW 상품 페이지 -->
+    <select id="selectNewProductPage" resultType="toyproject.controller.dto.ProductDto">
+        SELECT
+            p.PRODUCT_ID      AS productId,
+            p.BRAND_ID        AS brandId,
+            b.BRAND_NAME      AS brandName,
+            p.SUB_CATEGORY_ID AS subCategoryId,
+            p.PRODUCT_NAME    AS productName,
+            p.IMG             AS img,
+            p.SAILO           AS sailo,
+            p.MATERIAL        AS material,
+            p.COLOR           AS color,
+            p.AVG_SCORE       AS avgScore,
+            p.DETAIL_INFO     AS detailInfo,
+            p.PRICE           AS price,
+            p.BASIC_INFO      AS basicInfo,
+            p.IS_NEW          AS isNew,
+            p.IS_EVENT        AS isEvent
+        FROM PRODUCT p
+        JOIN BRAND b ON p.BRAND_ID = b.BRAND_ID
+        WHERE IS_NEW = 1
+
+        <choose>
+        <when test="sort == 'priceAsc'">
+            ORDER BY price ASC
+        </when>
+        <when test="sort == 'priceDesc'">
+            ORDER BY price DESC
+        </when>
+        <when test="sort == 'newest'">
+            ORDER BY product_id DESC
+        </when>
+        <otherwise>
+        ORDER BY PRODUCT_ID DESC
+        </otherwise>
+        </choose>
+            LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <!-- 1) 브랜드별 전체 개수 -->
+    <select id="selectBrandProductCount" parameterType="int" resultType="int">
+        SELECT COUNT(*)
+        FROM PRODUCT
+        WHERE BRAND_ID = #{brandId}
+    </select>
+
+    <!-- 2) 브랜드별 페이징 조회 -->
+    <select id="selectBrandProductPage" parameterType="map" resultType="toyproject.controller.dto.ProductDto">
+        SELECT
+        P.PRODUCT_ID      AS productId,
+        P.BRAND_ID        AS brandId,
+        B.BRAND_NAME      AS brandName,     <!-- 필요하면 DTO에 필드 추가 -->
+        P.SUB_CATEGORY_ID AS subCategoryId,
+        P.PRODUCT_NAME    AS productName,
+        P.IMG             AS img,
+        P.SAILO           AS sailo,
+        P.MATERIAL        AS material,
+        P.COLOR           AS color,
+        P.AVG_SCORE       AS avgScore,
+        P.DETAIL_INFO     AS detailInfo,
+        P.PRICE           AS price,
+        P.BASIC_INFO      AS basicInfo,
+        P.IS_NEW          AS isNew,
+        P.IS_EVENT        AS isEvent
+        FROM PRODUCT P
+        JOIN BRAND B
+        ON P.BRAND_ID = B.BRAND_ID
+        WHERE P.BRAND_ID = #{brandId}
+        <choose>
+            <when test="sort == 'priceAsc'">
+                ORDER BY price ASC
+            </when>
+            <when test="sort == 'priceDesc'">
+                ORDER BY price DESC
+            </when>
+            <when test="sort == 'newest'">
+                ORDER BY product_id DESC
+            </when>
+            <otherwise>
+                ORDER BY PRODUCT_ID DESC
+            </otherwise>
+        </choose>
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <!-- FOOTBALL SHOES: sub_category_id 또는 특정 컬럼으로 필터 -->
+    <select id="selectFootballProductCount" resultType="int">
+        SELECT COUNT(*)
+        FROM PRODUCT
+        WHERE SUB_CATEGORY_ID IN (/* 축구화에 해당하는 하위 카테고리 ID 목록 */)
+    </select>
+    <select id="selectFootballProductPage" resultType="toyproject.controller.dto.ProductDto">
+        SELECT ...
+            FROM PRODUCT
+        WHERE SUB_CATEGORY_ID IN (/* … */)
+        ORDER BY PRODUCT_ID DESC
+            LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <!-- APPAREL -->
+    <select id="selectApparelProductCount" resultType="int">
+        SELECT COUNT(*)
+        FROM PRODUCT
+        WHERE MAIN_CATEGORY = 'APPAREL'  <!-- 또는 해당 컬럼 조건 -->
+    </select>
+    <select id="selectApparelProductPage" resultType="toyproject.controller.dto.ProductDto">
+        SELECT ...
+            FROM PRODUCT
+        WHERE MAIN_CATEGORY = 'APPAREL'
+        ORDER BY PRODUCT_ID DESC
+            LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <!-- GOODS -->
+    <select id="selectGoodsProductCount" resultType="int">
+        SELECT COUNT(*)
+        FROM PRODUCT
+        WHERE MAIN_CATEGORY = 'GOODS'
+    </select>
+    <select id="selectGoodsProductPage" resultType="toyproject.controller.dto.ProductDto">
+        SELECT ...
+            FROM PRODUCT
+        WHERE MAIN_CATEGORY = 'GOODS'
+        <choose>
+            <when test="sort == 'priceAsc'">
+                ORDER BY price ASC
+            </when>
+            <when test="sort == 'priceDesc'">
+                ORDER BY price DESC
+            </when>
+            <when test="sort == 'newest'">
+                ORDER BY product_id DESC
+            </when>
+            <otherwise>
+                ORDER BY PRODUCT_ID DESC
+            </otherwise>
+        </choose>
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <select id="selectByMiddleCategory" resultType="toyproject.controller.dto.ProductDto">
+        SELECT
+        p.PRODUCT_ID      AS productId,
+        p.BRAND_ID        AS brandId,
+        b.BRAND_NAME      AS brandName,     <!-- 필요하면 DTO에 필드 추가 -->
+        p.SUB_CATEGORY_ID AS subCategoryId,
+        p.PRODUCT_NAME    AS productName,
+        p.IMG             AS img,
+        p.PRICE           AS price
+      FROM PRODUCT p
+        JOIN BRAND b ON p.BRAND_ID = b.BRAND_ID
+        JOIN SMALL_CATEGORY sc
+        ON p.SUB_CATEGORY_ID = sc.SUB_CATEGORY_ID
+        <where>
+            <if test="midCategoryId != null">
+           sc.MID_CATEGORY_ID = #{midCategoryId}
+            </if>
+        </where>
+      <!-- 동적 정렬 -->
+      <choose>
+      <when test="sort == 'priceAsc'">
+          ORDER BY p.PRICE ASC
+      </when>
+      <when test="sort == 'priceDesc'">
+          ORDER BY p.PRICE DESC
+      </when>
+      <when test="sort == 'newest'">
+          ORDER BY p.PRODUCT_ID DESC
+      </when>
+      <when test="sort == 'review'">
+          ORDER BY p.AVG_SCORE DESC
+      </when>
+          <otherwise>
+        ORDER BY p.PRODUCT_ID ASC
+      </otherwise>
+    </choose>
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <select id="countByMiddleCategory" resultType="int">
+        SELECT COUNT(*) FROM PRODUCT p
+        WHERE
+            #{midCategoryId} IS NULL
+        OR p.SUB_CATEGORY_ID IN (
+            SELECT SUB_CATEGORY_ID
+            FROM SMALL_CATEGORY
+            WHERE MID_CATEGORY_ID = #{midCategoryId}
+            )
+    </select>
+
+        <select id="selectByMiddleCategories"
+                parameterType="map"
+                resultType="toyproject.controller.dto.ProductDto">
+            SELECT
+            p.PRODUCT_ID      AS productId,
+            p.BRAND_ID        AS brandId,
+            b.BRAND_NAME      AS brandName,
+            p.SUB_CATEGORY_ID AS subCategoryId,
+            p.PRODUCT_NAME    AS productName,
+            p.IMG             AS img,
+            p.PRICE           AS price
+            FROM PRODUCT p
+            JOIN BRAND b ON p.BRAND_ID = b.BRAND_ID
+            JOIN SMALL_CATEGORY sc
+            ON p.SUB_CATEGORY_ID = sc.SUB_CATEGORY_ID
+            <where>
+                <if test="midCategoryIds != null and !midCategoryIds.isEmpty()">
+                    sc.MID_CATEGORY_ID IN
+                    <foreach collection="midCategoryIds" item="id"
+                             open="(" separator="," close=")">
+                        #{id}
+                    </foreach>
+                </if>
+            </where>
+            <choose>
+                <when test="sort == 'priceAsc'">
+                    ORDER BY price ASC
+                </when>
+                <when test="sort == 'priceDesc'">
+                    ORDER BY price DESC
+                </when>
+                <when test="sort == 'newest'">
+                    ORDER BY product_id DESC
+                </when>
+                <otherwise>
+                    ORDER BY PRODUCT_ID DESC
+                </otherwise>
+            </choose>
+            LIMIT #{offset}, #{pageSize}
+        </select>
+
+        <select id="countByMiddleCategories"
+                parameterType="map"
+                resultType="int">
+            SELECT COUNT(*)
+            FROM PRODUCT p
+            JOIN SMALL_CATEGORY sc
+            ON p.SUB_CATEGORY_ID = sc.SUB_CATEGORY_ID
+            <where>
+                <if test="midCategoryIds != null and !midCategoryIds.isEmpty()">
+                    sc.MID_CATEGORY_ID IN
+                    <foreach collection="midCategoryIds" item="id"
+                             open="(" separator="," close=")">
+                        #{id}
+                    </foreach>
+                </if>
+            </where>
+        </select>
+
+        <select id="selectCountByMajorCategory" parameterType="int" resultType="int">
+            SELECT COUNT(*)
+            FROM PRODUCT p
+                     JOIN SMALL_CATEGORY sc ON p.SUB_CATEGORY_ID = sc.SUB_CATEGORY_ID
+                     JOIN MIDDLE_CATEGORY mc ON sc.MID_CATEGORY_ID = mc.MID_CATEGORY_ID
+            WHERE mc.MAJOR_CATEGORY_ID = #{majorCategoryId}
+        </select>
+
+        <select id="selectPageByMajorCategory" parameterType="map" resultType="toyproject.controller.dto.ProductDto">
+            SELECT
+            p.PRODUCT_ID      AS productId,
+            p.BRAND_ID        AS brandId,
+            b.BRAND_NAME      AS brandName,
+            p.SUB_CATEGORY_ID AS subCategoryId,
+            p.PRODUCT_NAME    AS productName,
+            p.IMG             AS img,
+            p.PRICE           AS price,
+            p.AVG_SCORE       AS avgScore
+            FROM PRODUCT p
+            JOIN BRAND b   ON p.BRAND_ID = b.BRAND_ID
+            JOIN SMALL_CATEGORY sc ON p.SUB_CATEGORY_ID = sc.SUB_CATEGORY_ID
+            JOIN MIDDLE_CATEGORY mc ON sc.MID_CATEGORY_ID = mc.MID_CATEGORY_ID
+            WHERE mc.MAJOR_CATEGORY_ID = #{majorCategoryId}
+            <choose>
+                <when test="sort == 'priceAsc'">
+                    ORDER BY p.PRICE ASC
+                </when>
+                <when test="sort == 'priceDesc'">
+                    ORDER BY p.PRICE DESC
+                </when>
+                <when test="sort == 'newest'">
+                    ORDER BY p.PRODUCT_ID DESC
+                </when>
+                <when test="sort == 'review'">
+                    ORDER BY p.AVG_SCORE DESC
+                </when>
+                <otherwise>
+                    ORDER BY p.PRODUCT_ID DESC
+                </otherwise>
+            </choose>
+            LIMIT #{offset}, #{pageSize}
+        </select>
+</mapper>

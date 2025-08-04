@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="toyproject.mapper.ProductMapper">
+
+    <select id="selectProductDetail" parameterType="int" resultType="ProductResponseDto">
+        SELECT P.PRODUCT_ID AS productID,
+               D.BRAND_NAME AS brandName,
+               P.PRODUCT_NAME AS productName,
+               P.IMG AS productIMG,
+               P.SAILO AS sailo,
+               B.MAJOR_CATEGORY AS gender,
+               P.MATERIAL AS material,
+               P.COLOR AS color,
+               P.AVG_SCORE AS productScore,
+               P.BASIC_INFO AS productInfo,
+               P.PRICE AS productPrice
+        from PRODUCT P
+                 INNER JOIN BRAND D ON D.BRAND_ID=P.BRAND_ID
+                 INNER JOIN SMALL_CATEGORY S ON S.SUB_CATEGORY_ID=P.SUB_CATEGORY_ID
+                 INNER JOIN MIDDLE_CATEGORY M ON S.MID_CATEGORY_ID=M.MID_CATEGORY_ID
+                 INNER JOIN BIG_CATEGORY B ON M.MAJOR_CATEGORY_ID=B.MAJOR_CATEGORY_ID
+        WHERE P.PRODUCT_ID=#{productID}
+    </select>
+
+    <select id="productSize" parameterType="int" resultType="map">
+        select i.size,
+                i.CURRENT_QUANTITY AS stock
+        from PRODUCT p
+                 inner join INVENTORY i on i.PRODUCT_ID = p.PRODUCT_ID
+        WHERE p.PRODUCT_ID=#{productID}
+
+    </select>
+</mapper>
