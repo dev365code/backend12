@@ -1,0 +1,24 @@
+# Redis 커스텀 이미지
+FROM redis:7-alpine
+
+# 시간대 설정
+RUN apk add --no-cache tzdata
+ENV TZ=Asia/Seoul
+
+# Redis 설정 파일 복사 (선택사항)
+COPY redis.conf /usr/local/etc/redis/redis.conf
+
+# 권한 설정
+RUN chown redis:redis /usr/local/etc/redis/redis.conf
+
+# 데이터 디렉토리 생성
+RUN mkdir -p /data && chown redis:redis /data
+
+# Redis 포트 노출
+EXPOSE 6379
+
+# Redis 사용자로 실행
+USER redis
+
+# Redis 서버 시작 (설정 파일 사용)
+CMD ["redis-server", "/usr/local/etc/redis/redis.conf"]

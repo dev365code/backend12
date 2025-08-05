@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>뉴스 파이프라인 로깅 모니터</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container-fluid {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            margin: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .log-entry {
+            border-left: 4px solid #6c757d;
+            padding: 12px 16px;
+            margin-bottom: 6px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+            background: #fff;
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s ease;
+        }
+        
+        .log-entry:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .log-entry.INFO { 
+            border-left-color: #17a2b8; 
+            background: linear-gradient(90deg, #e1f5fe 0%, #ffffff 5%);
+        }
+        .log-entry.WARN { 
+            border-left-color: #ffc107; 
+            background: linear-gradient(90deg, #fff8e1 0%, #ffffff 5%);
+        }
+        .log-entry.ERROR { 
+            border-left-color: #dc3545; 
+            background: linear-gradient(90deg, #ffebee 0%, #ffffff 5%);
+        }
+        .log-entry.DEBUG { 
+            border-left-color: #6f42c1; 
+            background: linear-gradient(90deg, #f3e5f5 0%, #ffffff 5%);
+        }
+        
+        .category-badge {
+            font-size: 0.75em;
+            margin-right: 8px;
+            padding: 4px 8px;
+            border-radius: 12px;
+        }
+        
+        .timestamp {
+            color: #6c757d;
+            font-size: 0.8em;
+            font-weight: 500;
+        }
+        
+        .log-container {
+            height: 500px;
+            overflow-y: auto;
+            border: 1px solid #e9ecef;
+            border-radius: 10px;
+            padding: 15px;
+            background: #fafafa;
+        }
+        
+        .log-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .log-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        .log-container::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 10px;
+        }
+        
+        .log-container::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+        
+        .stats-card {
+            transition: all 0.3s ease;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(145deg, #ffffff, #f8f9fa);
+        }
+        
+        .stats-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 15px 15px 0 0 !important;
+            font-weight: 600;
+        }
+        
+        .realtime-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: #28a745;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+            box-shadow: 0 0 10px rgba(40, 167, 69, 0.6);
+        }
+        
+        @keyframes pulse {
+            0% { 
+                opacity: 1; 
+                transform: scale(1);
+            }
+            50% { 
+                opacity: 0.7; 
+                transform: scale(1.1);
+            }
+            100% { 
+                opacity: 1; 
+                transform: scale(1);
+            }
+        }
+        
+        .filter-section {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .btn {
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .form-select, .form-control {
+            border-radius: 8px;
+            border: 1px solid #e3e6ea;
+            transition: all 0.3s ease;
+        }
+        
+        .form-select:focus, .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        
+        .health-status-card {
+            transition: all 0.3s ease;
+        }
+        
+        .health-status-card:hover {
+            transform: scale(1.05);
+        }
+        
+        .modal-content {
+            border-radius: 15px;
+            border: none;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        
+        .modal-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 15px 15px 0 0;
+        }
+        
+        .alert {
+            border-radius: 10px;
+            border: none;
+        }
+        
+        @media (max-width: 768px) {
+            .log-container {
+                height: 400px;
+            }
+            
+            .container-fluid {
+                margin: 10px;
+                border-radius: 10px;
+            }
+            
+            .stats-card h4 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h2><i class="fas fa-chart-line me-2"></i>뉴스 파이프라인 로깅 모니터</h2>
+                        <div class="d-flex align-items-center">
+                            <span class="realtime-indicator me-2"></span>
+                            <small class="text-muted">실시간 모니터링 중</small>
+                        </div>
+                    </div>
+                    <div>
+                        <a href="/chat" class="btn btn-outline-primary me-2">
+                            <i class="fas fa-comments"></i> 챗봇으로 돌아가기
+                        </a>
+                        <button class="btn btn-success me-2" onclick="triggerPipeline()">
+                            <i class="fas fa-play"></i> 파이프라인 실행
+                        </button>
+                        <button class="btn btn-warning" onclick="clearLogs()">
+                            <i class="fas fa-trash"></i> 로그 초기화
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 시스템 상태 모니터링 -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fas fa-server me-2"></i>시스템 상태 모니터링
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="card border-primary mb-3 health-status-card">
+                                    <div class="card-body text-center">
+                                        <i id="langchainStatus" class="fas fa-circle text-secondary mb-2 fa-2x"></i>
+                                        <h6 class="card-title">LangChain 서비스</h6>
+                                        <p id="langchainHealth" class="card-text small text-muted">확인 중...</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card border-info mb-3 health-status-card">
+                                    <div class="card-body text-center">
+                                        <i id="vectorStatus" class="fas fa-circle text-secondary mb-2 fa-2x"></i>
+                                        <h6 class="card-title">벡터 DB</h6>
+                                        <p id="vectorHealth" class="card-text small text-muted">확인 중...</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card border-success mb-3 health-status-card">
+                                    <div class="card-body text-center">
+                                        <i id="pipelineStatus" class="fas fa-circle text-secondary mb-2 fa-2x"></i>
+                                        <h6 class="card-title">뉴스 파이프라인</h6>
+                                        <p id="pipelineHealth" class="card-text small text-muted">확인 중...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 통계 카드 -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card stats-card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-list fa-2x text-primary mb-2"></i>
+                        <h4 id="totalLogs" class="mb-1">0</h4>
+                        <small class="text-muted">총 로그 수</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card stats-card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-exclamation-triangle fa-2x text-warning mb-2"></i>
+                        <h4 id="errorCount" class="mb-1">0</h4>
+                        <small class="text-muted">에러 수</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card stats-card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-newspaper fa-2x text-info mb-2"></i>
+                        <h4 id="newsCount" class="mb-1">0</h4>
+                        <small class="text-muted">뉴스 관련</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card stats-card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-robot fa-2x text-success mb-2"></i>
+                        <h4 id="chatCount" class="mb-1">0</h4>
+                        <small class="text-muted">챗봇 상호작용</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 필터 섹션 -->
+        <div class="filter-section">
+            <div class="row align-items-end">
+                <div class="col-md-3">
+                    <label for="categoryFilter" class="form-label">카테고리 필터</label>
+                    <select id="categoryFilter" class="form-select" onchange="applyFilters()">
+                        <option value="">모든 카테고리</option>
+                        <option value="NEWS_COLLECTION">뉴스 수집</option>
+                        <option value="NEWS_PREPROCESSING">뉴스 전처리</option>
+                        <option value="VECTOR_STORAGE">벡터 저장</option>
+                        <option value="CHAT_INTERACTION">챗봇 상호작용</option>
+                        <option value="LLM_RESPONSE">LLM 응답</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="levelFilter" class="form-label">레벨 필터</label>
+                    <select id="levelFilter" class="form-select" onchange="applyFilters()">
+                        <option value="">모든 레벨</option>
+                        <option value="DEBUG">DEBUG</option>
+                        <option value="INFO">INFO</option>
+                        <option value="WARN">WARN</option>
+                        <option value="ERROR">ERROR</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="logCount" class="form-label">표시 개수</label>
+                    <select id="logCount" class="form-select" onchange="loadLogs()">
+                        <option value="50">최근 50개</option>
+                        <option value="100">최근 100개</option>
+                        <option value="200">최근 200개</option>
+                        <option value="all">모든 로그</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="autoScroll" checked>
+                        <label class="form-check-label" for="autoScroll">
+                            자동 스크롤
+                        </label>
+                    </div>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="realtimeMode" checked>
+                        <label class="form-check-label" for="realtimeMode">
+                            실시간 모드
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 로그 표시 영역 -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">
+                            <i class="fas fa-terminal me-2"></i>실시간 로그
+                        </h5>
+                        <div>
+                            <button class="btn btn-sm btn-outline-secondary" onclick="loadLogs()">
+                                <i class="fas fa-sync-alt"></i> 새로고침
+                            </button>
+                            <button class="btn btn-sm btn-primary" onclick="createTestLog()">
+                                <i class="fas fa-plus"></i> 테스트 로그
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div id="logContainer" class="log-container">
+                            <div class="text-center text-muted py-4">
+                                <i class="fas fa-spinner fa-spin"></i> 로그를 불러오는 중...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 테스트 로그 모달 -->
+    <div class="modal fade" id="testLogModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">테스트 로그 생성</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="testLevel" class="form-label">레벨</label>
+                        <select id="testLevel" class="form-select">
+                            <option value="INFO">INFO</option>
+                            <option value="WARN">WARN</option>
+                            <option value="ERROR">ERROR</option>
+                            <option value="DEBUG">DEBUG</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="testCategory" class="form-label">카테고리</label>
+                        <select id="testCategory" class="form-select">
+                            <option value="NEWS_COLLECTION">뉴스 수집</option>
+                            <option value="NEWS_PREPROCESSING">뉴스 전처리</option>
+                            <option value="VECTOR_STORAGE">벡터 저장</option>
+                            <option value="CHAT_INTERACTION">챗봇 상호작용</option>
+                            <option value="LLM_RESPONSE">LLM 응답</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="testMessage" class="form-label">메시지</label>
+                        <input type="text" id="testMessage" class="form-control" placeholder="테스트 메시지를 입력하세요">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-primary" onclick="submitTestLog()">생성</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let eventSource = null;
+        let allLogs = [];
+
+        // 페이지 로드 시 초기화
+        document.addEventListener('DOMContentLoaded', function() {
+            loadStatistics();
+            loadLogs();
+            loadSystemHealth();
+            startRealtimeUpdates();
+            
+            // 시스템 상태를 30초마다 업데이트
+            setInterval(loadSystemHealth, 30000);
+        });
+
+        // 통계 로드
+        function loadStatistics() {
+            fetch('/logs/api/statistics')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('totalLogs').textContent = data.totalLogs || 0;
+                    document.getElementById('errorCount').textContent = data.levelStats?.ERROR || 0;
+                    document.getElementById('newsCount').textContent = 
+                        (data.categoryStats?.NEWS_COLLECTION || 0) + 
+                        (data.categoryStats?.NEWS_PREPROCESSING || 0) + 
+                        (data.categoryStats?.VECTOR_STORAGE || 0);
+                    document.getElementById('chatCount').textContent = 
+                        (data.categoryStats?.CHAT_INTERACTION || 0) + 
+                        (data.categoryStats?.LLM_RESPONSE || 0);
+                })
+                .catch(error => console.error('통계 로드 실패:', error));
+        }
+
+        // 시스템 상태 모니터링
+        function loadSystemHealth() {
+            // LangChain 서비스 상태 확인
+            fetch('http://localhost:8001/health')
+                .then(response => response.json())
+                .then(data => {
+                    updateHealthStatus('langchain', data.overall_status, 
+                        `상태: ${data.overall_status}<br>벡터DB: ${data.vector_db}<br>챗봇: ${data.chatbot_agent}`);
+                })
+                .catch(error => {
+                    updateHealthStatus('langchain', 'error', '서비스에 연결할 수 없습니다.');
+                });
+
+            // 뉴스 파이프라인 상태 확인
+            fetch('http://localhost:8001/pipeline/status')
+                .then(response => response.json())
+                .then(data => {
+                    const status = data.success ? 'healthy' : 'error';
+                    updateHealthStatus('pipeline', status, 
+                        `서비스 초기화: ${data.services_initialized ? '완료' : '미완료'}`);
+                })
+                .catch(error => {
+                    updateHealthStatus('pipeline', 'error', '파이프라인에 연결할 수 없습니다.');
+                });
+
+            // 벡터 DB 상태는 LangChain 헬스체크에서 처리
+        }
+
+        // 상태 업데이트 헬퍼 함수
+        function updateHealthStatus(service, status, details) {
+            const statusElement = document.getElementById(service + 'Status');
+            const healthElement = document.getElementById(service + 'Health');
+            
+            // 상태 아이콘 색상 업데이트
+            statusElement.className = 'fas fa-circle mb-2 ' + getStatusColor(status);
+            
+            // 상태 텍스트 업데이트
+            healthElement.innerHTML = details;
+        }
+
+        // 상태에 따른 색상 반환
+        function getStatusColor(status) {
+            switch(status) {
+                case 'healthy':
+                case 'fully_operational':
+                    return 'text-success';
+                case 'partially_operational':
+                case 'limited_functionality':
+                    return 'text-warning';
+                case 'error':
+                case 'unhealthy':
+                    return 'text-danger';
+                default:
+                    return 'text-secondary';
+            }
+        }
+
+        // 로그 로드
+        function loadLogs() {
+            const count = document.getElementById('logCount').value;
+            const url = count === 'all' ? '/logs/api/all' : `/logs/api/recent?count=${count}`;
+            
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    allLogs = data;
+                    applyFilters();
+                    loadStatistics();
+                })
+                .catch(error => {
+                    console.error('로그 로드 실패:', error);
+                    document.getElementById('logContainer').innerHTML = 
+                        '<div class="text-center text-danger py-4"><i class="fas fa-exclamation-triangle"></i> 로그 로드에 실패했습니다.</div>';
+                });
+        }
+
+        // 필터 적용
+        function applyFilters() {
+            const categoryFilter = document.getElementById('categoryFilter').value;
+            const levelFilter = document.getElementById('levelFilter').value;
+            
+            let filteredLogs = allLogs;
+            
+            if (categoryFilter) {
+                filteredLogs = filteredLogs.filter(log => log.category === categoryFilter);
+            }
+            
+            if (levelFilter) {
+                filteredLogs = filteredLogs.filter(log => log.level === levelFilter);
+            }
+            
+            displayLogs(filteredLogs);
+        }
+
+        // 로그 표시
+        function displayLogs(logs) {
+            const container = document.getElementById('logContainer');
+            
+            if (logs.length === 0) {
+                container.innerHTML = '<div class="text-center text-muted py-4">표시할 로그가 없습니다.</div>';
+                return;
+            }
+            
+            const html = logs.map(log => `
+                <div class="log-entry ${log.level}">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div class="flex-grow-1">
+                            <span class="badge category-badge bg-secondary">${log.category}</span>
+                            <span class="badge bg-${getLevelColor(log.level)}">${log.level}</span>
+                            <div class="mt-1">
+                                <strong>${escapeHtml(log.message)}</strong>
+                                ${log.details ? `<div class="text-muted mt-1">${escapeHtml(log.details)}</div>` : ''}
+                                ${log.metadata && Object.keys(log.metadata).length > 0 ? 
+                                    `<div class="mt-1"><small class="text-info">메타데이터: ${JSON.stringify(log.metadata)}</small></div>` : ''}
+                            </div>
+                        </div>
+                        <div class="timestamp">${log.timestamp}</div>
+                    </div>
+                </div>
+            `).join('');
+            
+            container.innerHTML = html;
+            
+            // 자동 스크롤
+            if (document.getElementById('autoScroll').checked) {
+                container.scrollTop = container.scrollHeight;
+            }
+        }
+
+        // 실시간 업데이트 시작
+        function startRealtimeUpdates() {
+            if (!document.getElementById('realtimeMode').checked) return;
+            
+            if (eventSource) {
+                eventSource.close();
+            }
+            
+            const categoryFilter = document.getElementById('categoryFilter').value;
+            const levelFilter = document.getElementById('levelFilter').value;
+            
+            let url = '/logs/api/stream';
+            const params = new URLSearchParams();
+            if (categoryFilter) params.append('category', categoryFilter);
+            if (levelFilter) params.append('level', levelFilter);
+            
+            if (params.toString()) {
+                url += '?' + params.toString();
+            }
+            
+            eventSource = new EventSource(url);
+            
+            eventSource.onmessage = function(event) {
+                const logEntry = JSON.parse(event.data);
+                addNewLog(logEntry);
+                loadStatistics();
+            };
+            
+            eventSource.onerror = function(event) {
+                console.error('SSE 연결 오류:', event);
+            };
+        }
+
+        // 새 로그 추가
+        function addNewLog(logEntry) {
+            allLogs.push(logEntry);
+            
+            // 최대 개수 제한
+            const maxLogs = parseInt(document.getElementById('logCount').value) || 1000;
+            if (allLogs.length > maxLogs) {
+                allLogs = allLogs.slice(-maxLogs);
+            }
+            
+            applyFilters();
+        }
+
+        // 유틸리티 함수들
+        function getLevelColor(level) {
+            switch(level) {
+                case 'ERROR': return 'danger';
+                case 'WARN': return 'warning';
+                case 'INFO': return 'info';
+                case 'DEBUG': return 'secondary';
+                default: return 'primary';
+            }
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // 버튼 이벤트 핸들러들
+        function clearLogs() {
+            if (confirm('모든 로그를 삭제하시겠습니까?')) {
+                fetch('/logs/api/clear', { method: 'POST' })
+                    .then(response => response.text())
+                    .then(message => {
+                        alert(message);
+                        loadLogs();
+                    })
+                    .catch(error => {
+                        console.error('로그 삭제 실패:', error);
+                        alert('로그 삭제에 실패했습니다.');
+                    });
+            }
+        }
+
+        function triggerPipeline() {
+            fetch('/logs/api/trigger-pipeline', { method: 'POST' })
+                .then(response => response.text())
+                .then(message => {
+                    alert(message);
+                })
+                .catch(error => {
+                    console.error('파이프라인 실행 실패:', error);
+                    alert('파이프라인 실행에 실패했습니다.');
+                });
+        }
+
+        function createTestLog() {
+            const modal = new bootstrap.Modal(document.getElementById('testLogModal'));
+            modal.show();
+        }
+
+        function submitTestLog() {
+            const level = document.getElementById('testLevel').value;
+            const category = document.getElementById('testCategory').value;
+            const message = document.getElementById('testMessage').value;
+            
+            if (!message.trim()) {
+                alert('메시지를 입력해주세요.');
+                return;
+            }
+            
+            const params = new URLSearchParams({
+                level: level,
+                category: category,
+                message: message
+            });
+            
+            fetch('/logs/api/test', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: params
+            })
+            .then(response => response.text())
+            .then(message => {
+                bootstrap.Modal.getInstance(document.getElementById('testLogModal')).hide();
+                document.getElementById('testMessage').value = '';
+            })
+            .catch(error => {
+                console.error('테스트 로그 생성 실패:', error);
+                alert('테스트 로그 생성에 실패했습니다.');
+            });
+        }
+
+        // 실시간 모드 토글
+        document.getElementById('realtimeMode').addEventListener('change', function() {
+            if (this.checked) {
+                startRealtimeUpdates();
+            } else if (eventSource) {
+                eventSource.close();
+                eventSource = null;
+            }
+        });
+
+        // 페이지 언로드 시 정리
+        window.addEventListener('beforeunload', function() {
+            if (eventSource) {
+                eventSource.close();
+            }
+        });
+    </script>
+</body>
+</html>
