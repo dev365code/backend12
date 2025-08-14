@@ -1,0 +1,63 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
+
+spring:
+  application:
+    name: crypto-chatbot
+
+  # JPA 비활성화 (데이터베이스 연결 없이 실행)
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+      - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+
+  # 정적 리소스 설정
+  web:
+    resources:
+      static-locations: classpath:/static/
+      cache:
+        period: 0  # 개발 중에는 캐싱 비활성화
+
+  # Thymeleaf 설정
+  thymeleaf:
+    cache: false
+    check-template-location: true
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+    encoding: UTF-8
+
+  # JSON 설정
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+    default-property-inclusion: NON_NULL
+
+# LangChain 서비스 설정
+langchain:
+  service:
+    url: http://localhost:8001  # LangChain 서비스 포트와 일치
+    timeout: 30s
+
+# 로깅 설정
+logging:
+  level:
+    com.crypto.chatbot: INFO
+    org.springframework.web: DEBUG
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+
+# 액추에이터 (선택사항)
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: when-authorized

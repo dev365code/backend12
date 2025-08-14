@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout
+                    pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n"
+                    charset="UTF-8"/>
+        </Console>
+    </Appenders>
+
+    <Loggers>
+        <!-- SQL문 로그 -->
+        <Logger name="jdbc.sqlonly" level="DEBUG" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+
+        <!-- 결과 테이블 로그 -->
+        <Logger name="jdbc.resultsettable" level="DEBUG" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+
+        <!-- 불필요한 로그 OFF -->
+        <Logger name="jdbc.audit" level="OFF" additivity="false"/>
+        <Logger name="jdbc.connection" level="OFF" additivity="false"/>
+        <Logger name="jdbc.resultset" level="OFF" additivity="false"/>
+
+        <!-- 기본 로그 -->
+        <Root level="DEBUG">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>

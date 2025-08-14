@@ -1,0 +1,67 @@
+version: '3.8'
+services:
+  postgres-pgvector:
+    build: .
+    container_name: postgres-pgvector
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: mydb
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --locale=C"
+      TZ: Asia/Seoul
+    ports:
+      - "5435:5432"  # 로컬 PostgreSQL과 충돌 방지
+    volumes:
+      - pgvector_data:/var/lib/postgresql/data
+      - ./init-scripts:/docker-entrypoint-initdb.d
+    networks:
+      - pgvector_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U myuser -d mydb"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    command: >
+      postgres
+      -c shared_buffers=256MB
+      -c max_connections=200
+      -c effective_cache_size=1GB
+      -c maintenance_work_mem=64MB
+      -c checkpoint_completion_target=0.9
+      -c wal_buffers=16MB
+      -c default_statistics_target=100
+
+  redis:
+    build:
+      context: .
+      dockerfile: Dockerfile.redis
+    container_name: redis-cache
+    restart: unless-stopped
+    environment:
+      TZ: Asia/Seoul
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+      - ./redis.conf:/usr/local/etc/redis/redis.conf  # 선택사항
+    networks:
+      - pgvector_network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+
+volumes:
+  pgvector_data:
+    driver: local
+  redis_data:
+    driver: local
+
+networks:
+  pgvector_network:
+    driver: bridge

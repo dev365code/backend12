@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="toyproject.mapper.CategoryMapper">
+    <select id="selectAllBig" resultType="toyproject.controller.dto.BigCategoryDto">
+        SELECT MAJOR_CATEGORY_ID as majorCategoryId,
+               MAJOR_CATEGORY    as majorCategoryName
+        FROM BIG_CATEGORY
+        ORDER BY MAJOR_CATEGORY_ID
+    </select>
+
+    <select id="selectAllMiddle"
+            resultType="toyproject.controller.dto.BigCategoryDto">
+        SELECT
+            MID_CATEGORY_ID AS midCategoryId,
+            MAJOR_CATEGORY_ID as majorCategoryId,
+            MID_CATEGORY as midCategoryName,
+            FROM MIDDLE_CATEGORY
+        ORDER BY MAJOR_CATEGORY_ID, MID_CATEGORY_ID
+    </select>
+
+    <select id="selectAllSmall"
+            resultType="toyproject.controller.dto.BigCategoryDto">
+        SELECT
+            SMALL_CATEGORY_ID as smallCategoryId,
+            MID_CATEGORY_ID AS midCategoryId,
+            SMALL_CATEGORY as smallCategoryName
+        FROM SMALL_CATEGORY
+        ORDER BY MID_CATEGORY_ID, SMALL_CATEGORY_ID
+    </select>
+
+    <select id="selectMiddleByBigId" parameterType="int" resultType="toyproject.controller.dto.MiddleCategoryDto">
+        SELECT MID_CATEGORY_ID   as midCategoryId,
+               MAJOR_CATEGORY_ID as majorCategoryId,
+               MID_CATEGORY      as midCategoryName
+        FROM MIDDLE_CATEGORY
+        WHERE MAJOR_CATEGORY_ID = #{majorCategoryId}
+        ORDER BY MID_CATEGORY_ID
+    </select>
+
+    <select id="selectSmallByMiddleId" parameterType="int" resultType="toyproject.controller.dto.SmallCategoryDto">
+        SELECT SUB_CATEGORY_ID    as subCategoryId,
+               MID_CATEGORY_ID    as midCategoryId,
+               SUB_CATEGORY       as subCategoryName
+        FROM SMALL_CATEGORY
+        WHERE MID_CATEGORY_ID = #{midCategoryId}
+        ORDER BY SUB_CATEGORY_ID
+    </select>
+</mapper>

@@ -1,0 +1,142 @@
+body { margin: 0; font-family: sans-serif; }
+
+.top-banner {
+    background-color: #000;
+    color: #fff;
+    text-align: center;
+    font-size: 13px;
+    padding: 6px 0;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 40px;
+    border-bottom: 1px solid #eee;
+}
+
+.logo { font-size: 24px; font-weight: bold; }
+
+.nav {
+    display: flex;
+    gap: 20px;
+    font-size: 15px;
+}
+.nav a { text-decoration: none; color: black; }
+
+.right-menu {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    font-size: 13px;
+}
+
+.search-box {
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    border-radius: 20px;
+}
+
+.search-box input {
+    border: none;
+    outline: none;
+}
+
+.main-banner {
+    position: relative;
+}
+
+.main-banner img {
+    width: 100%;
+    display: block;
+}
+
+.banner-text {
+    position: absolute;
+    right: 60px;
+    bottom: 80px;
+    color: white;
+    text-align: right;
+}
+
+.banner-text h1 {
+    font-size: 38px;
+    margin: 0;
+}
+
+.banner-text p {
+    font-size: 14px;
+    margin: 5px 0 0;
+}
+
+.slider-dots {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.slider-dots span {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin: 0 3px;
+    border-radius: 50%;
+    background-color: #ddd;
+}
+
+.footer {
+    background-color: #111;
+    color: #fff;
+    padding: 40px;
+    font-size: 12px;
+}
+.footer-container {
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.footer-column {
+    flex: 1 1 180px;
+    margin: 10px;
+}
+.footer-column h4 {
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 13px;
+}
+.footer-column p, .footer-column a {
+    color: #ccc;
+    margin: 4px 0;
+    text-decoration: none;
+    line-height: 1.6;
+}
+.footer-bottom {
+    text-align: center;
+    color: #666;
+    font-size: 11px;
+    margin-top: 20px;
+}
+.capo-now {
+    padding: 40px;
+    text-align: center;
+}
+.capo-now h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+.capo-now-images {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+.capo-now-images img {
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 6px;
+}

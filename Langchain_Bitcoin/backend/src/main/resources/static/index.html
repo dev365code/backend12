@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🤖 크립토 챗봇 - Spring Boot + LangChain</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .chat-container {
+            width: 90%;
+            max-width: 800px;
+            height: 80vh;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #f8f9fa;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message.bot {
+            justify-content: flex-start;
+        }
+
+        .message-content {
+            max-width: 70%;
+            padding: 15px 20px;
+            border-radius: 18px;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+        }
+
+        .message.user .message-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-bottom-right-radius: 5px;
+        }
+
+        .message.bot .message-content {
+            background: white;
+            color: #333;
+            border: 1px solid #e1e8ed;
+            border-bottom-left-radius: 5px;
+        }
+
+        .chat-input-container {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #e1e8ed;
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #e1e8ed;
+            border-radius: 25px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .chat-input:focus {
+            border-color: #667eea;
+        }
+
+        .send-button {
+            padding: 15px 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .send-button:hover {
+            transform: scale(1.05);
+        }
+
+        .send-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .typing-indicator {
+            display: none;
+            align-items: center;
+            color: #666;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+
+        .typing-dots {
+            display: inline-block;
+            margin-left: 10px;
+        }
+
+        .typing-dots span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #667eea;
+            margin: 0 2px;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dots span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dots span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
+            }
+            30% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .status-bar {
+            padding: 10px 20px;
+            background: #f8f9fa;
+            border-top: 1px solid #e1e8ed;
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+        }
+
+        .status-online {
+            color: #28a745;
+        }
+
+        .status-offline {
+            color: #dc3545;
+        }
+
+        .debug-panel {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            max-width: 300px;
+            display: none;
+            z-index: 1000;
+            cursor: pointer;
+        }
+
+        /* 모바일 반응형 */
+        @media (max-width: 768px) {
+            .chat-container {
+                width: 95%;
+                height: 90vh;
+                border-radius: 15px;
+            }
+
+            .message-content {
+                max-width: 85%;
+            }
+
+            .chat-header {
+                font-size: 1.2em;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>🤖 크립토 챗봇 - Spring Boot + LangChain</div>
+                <div>
+                    <a href="/logs" style="color: white; text-decoration: none; font-size: 0.9em; margin-left: 20px; padding: 5px 10px; border: 1px solid rgba(255,255,255,0.3); border-radius: 4px; transition: background-color 0.3s;" 
+                       onmouseover="this.style.backgroundColor='rgba(255,255,255,0.2)'" 
+                       onmouseout="this.style.backgroundColor='transparent'">
+                        📊 로깅 모니터
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+            <div class="message bot">
+                <div class="message-content">
+                    안녕하세요! 👋 Spring Boot 기반 크립토 챗봇입니다.<br><br>
+                    💰 실시간 암호화폐 가격 조회<br>
+                    📰 최신 크립토 뉴스 검색<br>
+                    🔍 LangChain + RAG 기반 AI 응답<br><br>
+                    무엇을 도와드릴까요?
+                </div>
+            </div>
+            
+            <div class="typing-indicator" id="typingIndicator">
+                🤖 챗봇이 응답 중입니다
+                <div class="typing-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-input-container">
+            <input 
+                type="text" 
+                class="chat-input" 
+                id="chatInput" 
+                placeholder="메시지를 입력하세요... (예: 비트코인 가격, 최신 뉴스)"
+                autocomplete="off"
+            >
+            <button class="send-button" id="sendButton">전송</button>
+        </div>
+
+        <div class="status-bar">
+            <span id="statusText" class="status-offline">서버 연결 확인 중...</span>
+        </div>
+    </div>
+
+    <div class="debug-panel" id="debugPanel">
+        <strong>디버그 정보 (클릭하여 숨기기):</strong><br>
+        <div id="debugInfo"></div>
+    </div>
+
+    <script>
+        class SpringBootChatbot {
+            constructor() {
+                this.apiUrl = window.location.origin + '/api';
+                this.sessionId = this.generateSessionId();
+                this.isTyping = false;
+                this.debugMode = true;
+                
+                this.initializeElements();
+                this.bindEvents();
+                this.checkServerStatus();
+            }
+
+            initializeElements() {
+                this.chatMessages = document.getElementById('chatMessages');
+                this.chatInput = document.getElementById('chatInput');
+                this.sendButton = document.getElementById('sendButton');
+                this.typingIndicator = document.getElementById('typingIndicator');
+                this.statusText = document.getElementById('statusText');
+                this.debugPanel = document.getElementById('debugPanel');
+                this.debugInfo = document.getElementById('debugInfo');
+                
+                if (this.debugMode) {
+                    this.debugPanel.style.display = 'block';
+                }
+            }
+
+            bindEvents() {
+                this.sendButton.addEventListener('click', () => this.sendMessage());
+                
+                this.chatInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        this.sendMessage();
+                    }
+                });
+                
+                this.debugPanel.addEventListener('click', () => {
+                    this.debugMode = !this.debugMode;
+                    this.debugPanel.style.display = this.debugMode ? 'block' : 'none';
+                });
+            }
+
+            generateSessionId() {
+                return 'session_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now();
+            }
+
+            async checkServerStatus() {
+                try {
+                    this.updateStatus('🔍 Spring Boot 서버 확인 중...', false);
+                    this.logDebug('Spring Boot 서버 상태 확인 시작...');
+                    
+                    const response = await fetch(`${this.apiUrl}/health`);
+                    if (response.ok) {
+                        const data = await response.json();
+                        const langchainStatus = data.langchain_service === 'connected' ? '연결됨' : '연결 안됨';
+                        this.updateStatus(`🟢 Spring Boot 서버 정상 (LangChain: ${langchainStatus})`, true);
+                        this.logDebug(`✅ Spring Boot 서버 정상, LangChain: ${data.langchain_service}`);
+                    } else {
+                        this.updateStatus('🔴 Spring Boot 서버 오류', false);
+                    }
+                } catch (error) {
+                    this.updateStatus('🔴 Spring Boot 서버 연결 실패', false);
+                    this.logDebug(`❌ 서버 연결 실패: ${error.message}`);
+                }
+            }
+
+            updateStatus(message, isOnline) {
+                this.statusText.textContent = message;
+                this.statusText.className = isOnline ? 'status-online' : 'status-offline';
+            }
+
+            logDebug(message) {
+                if (this.debugMode) {
+                    const timestamp = new Date().toLocaleTimeString();
+                    this.debugInfo.innerHTML = `[${timestamp}] ${message}<br>` + this.debugInfo.innerHTML;
+                    
+                    const lines = this.debugInfo.innerHTML.split('<br>');
+                    if (lines.length > 10) {
+                        this.debugInfo.innerHTML = lines.slice(0, 10).join('<br>');
+                    }
+                }
+                console.log(`[SpringBoot ChatBot] ${message}`);
+            }
+
+            async sendMessage() {
+                const message = this.chatInput.value.trim();
+                
+                if (!message || this.isTyping) {
+                    return;
+                }
+
+                this.addMessage(message, 'user');
+                this.chatInput.value = '';
+                
+                this.setTyping(true);
+                this.logDebug(`메시지 전송: ${message}`);
+
+                try {
+                    const response = await fetch(`${this.apiUrl}/chat`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            message: message,
+                            session_id: this.sessionId,
+                            use_rag: true
+                        })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    this.logDebug(`Spring Boot 응답 받음: ${JSON.stringify(data).substring(0, 100)}...`);
+                    
+                    this.addMessage(data.message, 'bot');
+                    
+                    if (data.dataSources && data.dataSources.length > 0) {
+                        const sourceInfo = `📊 데이터 소스: ${data.dataSources.join(', ')}`;
+                        this.addMessage(sourceInfo, 'bot', true);
+                    }
+
+                } catch (error) {
+                    this.logDebug(`오류 발생: ${error.message}`);
+                    this.addMessage('죄송합니다. Spring Boot 서버에서 오류가 발생했습니다. 잠시 후 다시 시도해주세요.', 'bot');
+                    
+                    setTimeout(() => this.checkServerStatus(), 2000);
+                } finally {
+                    this.setTyping(false);
+                }
+            }
+
+            addMessage(content, sender, isSmall = false) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${sender}`;
+                
+                const contentDiv = document.createElement('div');
+                contentDiv.className = 'message-content';
+                
+                // Check if content contains base64 image data
+                if (content.includes('data:image/') && content.includes('base64,')) {
+                    // Create image element for chart
+                    const imgMatch = content.match(/data:image\/[^;]+;base64,[^"'\s]+/);
+                    if (imgMatch) {
+                        const img = document.createElement('img');
+                        img.src = imgMatch[0];
+                        img.style.maxWidth = '100%';
+                        img.style.height = 'auto';
+                        img.style.borderRadius = '8px';
+                        img.style.marginTop = '10px';
+                        contentDiv.appendChild(img);
+                        
+                        // Add any text before the image
+                        const textBefore = content.substring(0, content.indexOf(imgMatch[0])).trim();
+                        if (textBefore) {
+                            const textNode = document.createTextNode(textBefore);
+                            contentDiv.insertBefore(textNode, img);
+                        }
+                    } else {
+                        contentDiv.textContent = content;
+                    }
+                } else {
+                    contentDiv.textContent = content;
+                }
+                
+                if (isSmall) {
+                    contentDiv.style.fontSize = '0.8em';
+                    contentDiv.style.opacity = '0.7';
+                }
+                
+                messageDiv.appendChild(contentDiv);
+                this.chatMessages.insertBefore(messageDiv, this.typingIndicator);
+                this.scrollToBottom();
+            }
+
+            setTyping(isTyping) {
+                this.isTyping = isTyping;
+                this.typingIndicator.style.display = isTyping ? 'flex' : 'none';
+                this.sendButton.disabled = isTyping;
+                this.chatInput.disabled = isTyping;
+                
+                if (isTyping) {
+                    this.scrollToBottom();
+                }
+            }
+
+            scrollToBottom() {
+                setTimeout(() => {
+                    this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
+                }, 100);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            window.springBootChatbot = new SpringBootChatbot();
+        });
+    </script>
+</body>
+</html>
