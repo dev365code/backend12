@@ -9,13 +9,10 @@
         <module name="springboot-ec2-cicd-demo" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="springboot-ec2-cicd-demo" target="17" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="springboot-ec2-cicd-demo" options="-parameters" />
+      <module name="springboot-ec2-cicd-demo" options="" />
     </option>
   </component>
 </project>
