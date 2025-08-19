@@ -1,0 +1,18 @@
+# 민감정보 파일
+src/main/resources/jdbc.properties
+src/main/resources/application.properties
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+
+# Build files
+target/
+out/
+
+# Logs
+*.log
+
+# macOS
+.DS_Store
